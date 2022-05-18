@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
+// #include <stdlib.h>
 #include <string.h>
-// #include "memory.h"
+#include "memory.h"
 
 #define NUMBER 1024*100
 
@@ -21,19 +21,18 @@ void PUSH(Stack* root, char* str){
 char* TOP(Stack* root){
     int t = 0;
 
+    if(root->count == 0){
+        perror("Error! stack is empty");
+    }
+
     char* res = (char*)malloc(sizeof(char)*1024);
 
-    if(root->count == 0){
-        printf("Error! stack is empty");
-    }
     int x = (root->count)-2;
     while(root->value[x] != '\0'){
         x--;
     }
-    for(int i = x; i <=root->count; i++){
-        res[t]=root->value[i];
-        t++;
-    }
+    x++;
+    strcpy(res,&(root->value[x]));
     return res;
 }
 
