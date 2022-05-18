@@ -2,7 +2,7 @@
 CC = gcc
 FLAGS= 
 HEADERS = 
-all: server client clientsTest
+all: server client runClient
 
 server: server.o
 	$(CC) $< -o server -lpthread
@@ -12,9 +12,13 @@ client: client.o
 
 ClientTest: clientsTest.o
 	$(CC) $< -o clientsTest
+
+runClient: runClient.o ClientTest
+	$(CC) $< -o runClient 
+
 	
 %.o: %.c
 	$(CC) -c $< -o $@
 
 clean:
-	rm -f *.o server client clientsTest
+	rm -f *.o server client clientsTest runClient

@@ -1,6 +1,7 @@
 /*
 ** server.c -- a stream socket server demo
 */
+#include"header.h"
 #include"stack.c"
 #include <stdio.h>
 // #include <stdlib.h>
@@ -22,6 +23,18 @@
 #define BACKLOG 10   // how many pending connections queue will hold
 
 Stack *s = NULL;
+
+
+
+int openlock()
+{
+    fd = open(locking, O_WRONLY | O_CREAT);
+    if (fd < 0)
+    {
+        perror("Error!!\nthe file has not opend");
+    }
+    memset(&lock, 0, sizeof(lock));
+}
 
 void* My_fork(int new_fd){
     int num;
@@ -93,9 +106,8 @@ void *get_in_addr(struct sockaddr *sa)
 
 int main(void)
 {
+    openlock();
     s = mmap(NULL, sizeof(Stack), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0); 
-
-
     int sockfd, new_fd;  // listen on sock_fd, new connection on new_fd
     struct addrinfo hints, *servinfo, *p;
     struct sockaddr_storage their_addr; // connector's address information
@@ -180,5 +192,6 @@ int main(void)
             exit(1);
         }
 	}
+    munmap(s, sizeof(Stack));
     return 0;
 }

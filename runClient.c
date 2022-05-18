@@ -8,7 +8,7 @@ int main(int argc, char const *argv[])
         if (!(fork()))
         {
             printf("fork %d\n", i);
-            char *args[30] = {"./client", argv[1],  NULL};
+            char *args[3] = {"./clientsTest", argv[1],  NULL};
             execvp(args[0], args);
         }
     }
